@@ -1,9 +1,6 @@
 package com.example.data_collection.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 /**
 * Create by Generate...
@@ -18,7 +15,8 @@ public class Station {
 	/**
 	 * 岗位ID
 	 */
-	@Column(name = "st_id" )
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long stId;
 	/**
 	 * 公司ID
