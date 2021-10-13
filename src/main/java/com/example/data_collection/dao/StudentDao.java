@@ -10,7 +10,6 @@ import java.util.List;
 public interface StudentDao extends JpaRepository<Student , Long>,
         JpaSpecificationExecutor<Student> {
 
-
     @Query(nativeQuery = true , value ="select * from t_student where s_department like %?1%")
     List<Student> findBysDepartment(String sDepartment);
 }

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/portal")
-public class StudentController {
+public class PortalStudentController {
     // 注入
     @Autowired
     private StudentService studentService;
