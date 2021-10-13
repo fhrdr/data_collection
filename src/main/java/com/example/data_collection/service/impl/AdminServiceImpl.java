@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AdminServiceImpl implements AdminService {
+    //注入
     @Autowired
     private AdminDao adminDao;
 
