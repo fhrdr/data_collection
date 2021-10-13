@@ -14,12 +14,10 @@ public interface StudentStationService {
     ResponseResult studentCancelStation(Long stId , HttpSession session);
 
     // 杨修伟部分
-    /**
-     * 添加信息
-     * @param studentStation
-     * @return
-     */
+    //添加学生-岗位 信息
     ResponseResult insertStudentStation(StudentStation studentStation);
     //  查询学生姓名，部门，班级，公司，岗位，选择时间信息
     List<Object[]> findStudentinfo();
+    //通过班级查询学生，岗位，公司的相关信息
+    List<Object[]> findBySclass(String sClass);
 }

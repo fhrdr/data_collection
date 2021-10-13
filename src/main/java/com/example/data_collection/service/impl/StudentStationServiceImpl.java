@@ -142,4 +142,14 @@ public class StudentStationServiceImpl implements StudentStationService {
     public List<Object[]> findStudentinfo() {
         return studentStationDao.findAllSs();
     }
+
+    /**
+     * 通过班级进行关联查询学生-岗位信息
+     * @param sClass
+     * @return
+     */
+    @Override
+    public List<Object[]> findBySclass(String sClass) {
+        return studentStationDao.findBySclass(sClass);
+    }
 }

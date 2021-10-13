@@ -56,4 +56,9 @@ public class AdminServiceImpl implements AdminService {
         }
         return ResponseResult.SUCCESS("修改成功").setData(adminDao.save(admin));
     }
+
+    @Override
+    public ResponseResult deleteAdminById(Long id) {
+        return ResponseResult.SUCCESS("删除成功").setData(adminDao.deleteByid(id));
+    }
 }

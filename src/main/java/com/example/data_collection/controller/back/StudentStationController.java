@@ -37,7 +37,17 @@ public class StudentStationController {
     @RequestMapping("/getStudent")
     public ResponseResult getStudentinfo(){
 
-        return ResponseResult.SUCCESS().setData(studentStationService.findStudentinfo());
+        return ResponseResult.SUCCESS("查询成功").setData(studentStationService.findStudentinfo());
+    }
+
+    /**
+     * 通过班级查询关联信息
+     * @param sClass
+     * @return
+     */
+    @RequestMapping("/getByClass")
+    public ResponseResult getByClass(String sClass){
+        return ResponseResult.SUCCESS("查询成功").setData(studentStationService.findBySclass(sClass));
     }
 
 
