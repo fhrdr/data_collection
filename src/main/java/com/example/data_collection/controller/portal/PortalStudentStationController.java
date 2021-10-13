@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/portal")
-public class StudentStationController {
+public class PortalStudentStationController {
     // 注入
     @Autowired
     private StudentStationService studentStationService;

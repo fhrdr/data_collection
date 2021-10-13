@@ -42,4 +42,30 @@ public interface StationDao extends JpaRepository<Station , Long>,
             "WHERE\n" +
             "\tb.st_id =?1" )
     List<Object[]> selectInfo(Long stId , Long sId);
+
+    // 杨修伟部分
+    //查询岗位信息以及对应公司名
+    @Query(value = "select " +
+            "st_name, " +
+            "st_describe," +
+            " st_duration," +
+            " st_pay," +
+            " st_start," +
+            " st_end," +
+            " c_name" +
+            " from t_station,t_company " +
+            "where t_station.c_id = t_company.c_id",nativeQuery = true)
+    List<Object[]> findAllStationAndCompany();
+
+    //通过公司名查询岗位信息
+    @Query(value = "select " +
+            "t_station.* " +
+            "from t_station " +
+            "where (SELECT c_name from t_company where t_company.c_id = t_station.c_id) " +
+            " = #{c_name}",nativeQuery = true)
+    List<Station> findStationByCname(String cName);
+
+    //通过id删除岗位
+    @Query(value = "delete from t_station where st_id = #{st_id}",nativeQuery = true)
+    int deleteByid(Long stId);
 }
