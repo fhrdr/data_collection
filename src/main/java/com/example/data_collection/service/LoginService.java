@@ -11,4 +11,7 @@ public interface LoginService {
 
     // 管理员登录
     ResponseResult adminLogin(String number , String password, HttpSession session);
+
+    // 注销登录
+    ResponseResult LoginOut(HttpSession session);
 }

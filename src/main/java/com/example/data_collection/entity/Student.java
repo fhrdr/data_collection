@@ -1,6 +1,8 @@
 package com.example.data_collection.entity;
 
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
 * Create by Generate...
@@ -140,4 +142,17 @@ public class Student {
     this.sChoice = sChoice;
   }
 
+
+    public Map<String , Object> toHashMap() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("sChoice", sChoice);
+        map.put("sPhone", sPhone);
+        map.put("sClass", sClass);
+        map.put("sName", sName);
+        map.put("sDepartment", sDepartment);
+        map.put("sCollege", sCollege);
+        map.put("sNumber", sNumber);
+        map.put("sId", sId);
+        return map;
+    }
 }

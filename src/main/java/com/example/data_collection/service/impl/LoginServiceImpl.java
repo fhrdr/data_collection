@@ -45,7 +45,7 @@ public class LoginServiceImpl implements LoginService {
         List<Student> students = studentDao.findAll(new Specification<Student>() {
             @Override
             public Predicate toPredicate(Root<Student> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.equal(root.get("s_number") , number);
+                return criteriaBuilder.equal(root.get("sNumber") , number);
             }
         });
         // 密码加密
@@ -58,6 +58,7 @@ public class LoginServiceImpl implements LoginService {
         }
         // 生成 token
         Map<String, Object> claims = new HashMap<>();
+        claims.put("sId", students.get(0).getSId());
         claims.put("number", number);
         claims.put("name", students.get(0).getSName());
         claims.put("class", students.get(0).getClass());
@@ -105,5 +106,17 @@ public class LoginServiceImpl implements LoginService {
         System.out.println(token);
         // 返回成功
         return ResponseResult.SUCCESS("登录成功！").setData(token);
+    }
+
+    /**
+     * 注销登录
+     * @param session session
+     * @return 返回结果
+     */
+    @Override
+    public ResponseResult LoginOut(HttpSession session) {
+        // 删除session中的token
+        session.removeAttribute("token");
+        return ResponseResult.SUCCESS("注销登录成功！");
     }
 }

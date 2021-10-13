@@ -1,6 +1,8 @@
 package com.example.data_collection.entity;
 
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
 * Create by Generate...
@@ -138,5 +140,4 @@ public class Station {
   public void setStEnd(String stEnd) {
     this.stEnd = stEnd;
   }
-
 }

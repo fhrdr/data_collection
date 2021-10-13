@@ -38,6 +38,16 @@ public class LoginController {
     }
 
     /**
+     * 注销登录
+     * @param session session
+     * @return 返回结果
+     */
+    @GetMapping("/loginOut")
+    ResponseResult loginOut(HttpSession session){
+        return loginService.LoginOut(session);
+    }
+
+    /**
      * 处理 403 错误
      * @return 返回结果
      */

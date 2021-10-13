@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface StudentDao extends JpaRepository<Student , Long>,
         JpaSpecificationExecutor<Student> {
+
+
 }

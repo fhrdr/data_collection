@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/portal")
 public class ListController {
@@ -57,5 +59,17 @@ public class ListController {
     ResponseResult listAll(@PathVariable("size") int size,
                              @PathVariable("page") int page){
         return listService.listAll(page, size);
+    }
+
+    /**
+     * 通过岗位ID 查询详细信息
+     * @param stId 岗位ID
+     * @param session session
+     * @return 返回查询结果
+     */
+    @PreAuthorize("@permission.use()")
+    @GetMapping("/selectInfo/{stId}")
+    ResponseResult selectInfo(@PathVariable("stId") Long stId , HttpSession session){
+        return listService.selectInfo(stId , session);
     }
 }
