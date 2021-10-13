@@ -85,4 +85,26 @@ public class StudentServiceImpl implements StudentService {
         result.put("stations", stations);
         return ResponseResult.SUCCESS("获取成功！").setData(result);
     }
+
+//    ------------------------------------------
+    // 杨修伟部分
+    @Override
+    public ResponseResult findAllStudent() {
+        return ResponseResult.SUCCESS("查找成功").setData(studentDao.findAll());
+    }
+
+    @Override
+    public ResponseResult findStudentByDepartment(String sDepartment) {
+        return ResponseResult.SUCCESS("查找成功").setData(studentDao.findBysDepartment(sDepartment));
+    }
+
+    @Override
+    public ResponseResult insertStudent(Student student) {
+        return ResponseResult.SUCCESS("添加成功").setData(studentDao.save(student));
+    }
+
+    @Override
+    public ResponseResult updateStudent(Student student) {
+        return ResponseResult.SUCCESS("修改成功").setData(studentDao.save(student));
+    }
 }

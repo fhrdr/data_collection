@@ -42,4 +42,10 @@ public interface StationDao extends JpaRepository<Station , Long>,
             "WHERE\n" +
             "\tb.st_id =?1" )
     List<Object[]> selectInfo(Long stId , Long sId);
+
+    // 杨秀伟部分
+    @Query(value = "select st_name, st_describe, st_duration, st_pay, st_start, st_end, c_name from t_station,t_company where t_station.c_id = t_company.c_id",nativeQuery = true)
+    List<Object[]> findAllStationAndCompany();
+    @Query(value = "select t_station.* from t_station where (SELECT c_name from t_company where t_company.c_id = t_station.c_id)  = '洲际酒店（成都）'",nativeQuery = true)
+    List<Station> findStationByCname(String cName);
 }
