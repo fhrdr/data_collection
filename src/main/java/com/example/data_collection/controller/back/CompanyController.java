@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/back/company")
@@ -51,8 +52,8 @@ public class CompanyController {
      * @param cId
      * @return
      */
-    @RequestMapping("/delete/{c_id}")
-    public ResponseResult deleteStudent(@PathVariable("cId") Long cId){
+    @RequestMapping("/delete")
+    public ResponseResult deleteStudent(@PathParam("cId") Long cId){
         return companyService.deleteStudent(cId);
     }
 }

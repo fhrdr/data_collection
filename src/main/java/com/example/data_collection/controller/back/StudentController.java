@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.websocket.server.PathParam;
 import java.awt.print.Pageable;
 
 @RestController
@@ -66,8 +67,8 @@ public class StudentController {
      * @param sId
      * @return
      */
-    @RequestMapping("/delete/{s_id}")
-    public ResponseResult deleteStudent(@PathVariable("sId") Long sId){
+    @RequestMapping("/delete")
+    public ResponseResult deleteStudent(@PathParam("sId") Long sId){
         return studentService.deleteStudent(sId);
     }
 

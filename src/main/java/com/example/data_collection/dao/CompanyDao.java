@@ -42,6 +42,6 @@ public interface CompanyDao extends JpaRepository<Company , Long>,
     List<Object[]> findByCName(String cName);
 
     //通过id删除公司
-    @Query(value = "delete from t_company where c_id = #{c_id}",nativeQuery = true)
+    @Query(value = "delete from t_company where c_id = ?1",nativeQuery = true)
     int deleteByid(Long cId);
 }

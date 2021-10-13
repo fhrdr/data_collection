@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -63,8 +64,8 @@ public class AdminController {
      * @param id
      * @return
      */
-    @RequestMapping("/deleteAdmin/{id}")
-    public ResponseResult deleteAdminById(@PathVariable("id") Long id){
+    @RequestMapping("/deleteAdmin")
+    public ResponseResult deleteAdminById(@PathParam("id") Long id){
         return adminService.deleteAdminById(id);
     }
 }

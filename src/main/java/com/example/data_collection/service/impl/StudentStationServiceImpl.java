@@ -2,7 +2,6 @@ package com.example.data_collection.service.impl;
 
 import com.example.data_collection.dao.StudentStationDao;
 import com.example.data_collection.entity.StudentStation;
-import com.example.data_collection.entity.StudentStationInfo;
 import com.example.data_collection.result.ResponseResult;
 import com.example.data_collection.service.StudentStationService;
 import com.example.data_collection.utils.JwtUtils;
@@ -139,8 +138,8 @@ public class StudentStationServiceImpl implements StudentStationService {
      * @return
      */
     @Override
-    public List<Object[]> findStudentinfo() {
-        return studentStationDao.findAllSs();
+    public ResponseResult findStudentinfo() {
+        return ResponseResult.SUCCESS("查询成功").setData(studentStationDao.findAllSs());
     }
 
     /**
@@ -149,7 +148,8 @@ public class StudentStationServiceImpl implements StudentStationService {
      * @return
      */
     @Override
-    public List<Object[]> findBySclass(String sClass) {
-        return studentStationDao.findBySclass(sClass);
+    public ResponseResult findBySclass(String sClass) {
+        System.out.println(sClass);
+        return ResponseResult.SUCCESS("查询成功").setData(studentStationDao.findBySClass(sClass));
     }
 }

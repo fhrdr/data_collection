@@ -66,6 +66,6 @@ public interface StationDao extends JpaRepository<Station , Long>,
     List<Station> findStationByCname(String cName);
 
     //通过id删除岗位
-    @Query(value = "delete from t_station where st_id = #{st_id}",nativeQuery = true)
+    @Query(value = "delete from t_station where st_id = ?1",nativeQuery = true)
     int deleteByid(Long stId);
 }

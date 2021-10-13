@@ -135,6 +135,7 @@ public class StudentServiceImpl implements StudentService {
      */
     @Override
     public ResponseResult deleteStudent(Long sId) {
+        System.out.println(sId);
         return ResponseResult.SUCCESS("删除成功").setData(studentDao.deleteByid(sId));
     }
 }

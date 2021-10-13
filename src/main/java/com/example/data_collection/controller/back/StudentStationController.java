@@ -1,16 +1,14 @@
 package com.example.data_collection.controller.back;
 
 import com.example.data_collection.entity.StudentStation;
-import com.example.data_collection.entity.StudentStationInfo;
 import com.example.data_collection.result.ResponseResult;
 import com.example.data_collection.service.StudentStationService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
+import javax.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/back/ss")
@@ -37,7 +35,7 @@ public class StudentStationController {
     @RequestMapping("/getStudent")
     public ResponseResult getStudentinfo(){
 
-        return ResponseResult.SUCCESS("查询成功").setData(studentStationService.findStudentinfo());
+        return studentStationService.findStudentinfo();
     }
 
     /**
@@ -46,8 +44,8 @@ public class StudentStationController {
      * @return
      */
     @RequestMapping("/getByClass")
-    public ResponseResult getByClass(String sClass){
-        return ResponseResult.SUCCESS("查询成功").setData(studentStationService.findBySclass(sClass));
+    public ResponseResult getByClass(@PathParam("sClass") String sClass){
+        return studentStationService.findBySclass(sClass);
     }
 
 

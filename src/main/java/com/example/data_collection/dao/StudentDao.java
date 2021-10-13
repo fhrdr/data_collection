@@ -18,6 +18,6 @@ public interface StudentDao extends JpaRepository<Student , Long>,
     List<Student> findBysDepartment(String sDepartment);
 
     //通过id删除学生
-    @Query(value = "delete from t_student where s_id = #{s_id}",nativeQuery = true)
+    @Query(value = "delete from t_student where s_id = ?1",nativeQuery = true)
     int deleteByid(Long sId);
 }
