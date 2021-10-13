@@ -28,6 +28,11 @@ public class Station {
 	 */
 	@Column(name = "st_name" )
 	private String stName;
+    /**
+     * 需求人数
+     */
+	@Column(name = "st_need")
+    private Long stNeed;
 	/**
 	 * 职位描述
 	 */
@@ -77,9 +82,17 @@ public class Station {
     return stName;
   }
 
-  public void setStName(String stName) {
+    public void setStName(String stName) {
     this.stName = stName;
   }
+
+    public Long getcId() {
+        return cId;
+    }
+
+    public void setcId(Long cId) {
+        this.cId = cId;
+    }
 
 
   public String getStDescribe() {
