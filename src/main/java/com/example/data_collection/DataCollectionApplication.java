@@ -1,9 +1,9 @@
 package com.example.data_collection;
 
+import com.example.data_collection.utils.RedisUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.web.access.AccessDeniedHandler;
 
 @SpringBootApplication
 public class DataCollectionApplication {
@@ -12,4 +12,8 @@ public class DataCollectionApplication {
         SpringApplication.run(DataCollectionApplication.class, args);
     }
 
+    @Bean
+    public RedisUtil RedisUtil(){
+        return new RedisUtil();
+    }
 }

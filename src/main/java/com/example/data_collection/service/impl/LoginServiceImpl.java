@@ -7,6 +7,7 @@ import com.example.data_collection.entity.Student;
 import com.example.data_collection.result.ResponseResult;
 import com.example.data_collection.service.LoginService;
 import com.example.data_collection.utils.JwtUtils;
+import com.example.data_collection.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +30,8 @@ public class LoginServiceImpl implements LoginService {
     private AdminDao adminDao;
     @Autowired
     private StudentDao studentDao;
+    @Autowired
+    private RedisUtil redisUtil;
 
     /**
      * 学生登录接口
@@ -36,10 +40,13 @@ public class LoginServiceImpl implements LoginService {
      * @return 返回结果 和 token
      */
     @Override
-    public ResponseResult studentLogin(String number, String password, HttpSession session) {
+    public ResponseResult studentLogin(String number, String password) {
         // 判断是否为空
-        if (number == null && password == null){
+        if (number == null){
             return ResponseResult.FAILED("账号为空！");
+        }
+        if (password == null){
+            return ResponseResult.FAILED("密码为空！");
         }
         // 查询账号
         List<Student> students = studentDao.findAll(new Specification<Student>() {
@@ -65,7 +72,8 @@ public class LoginServiceImpl implements LoginService {
         claims.put("phone", students.get(0).getSPhone());
         String token = JwtUtils.createToken(claims);
         // 存放 token
-        session.setAttribute("token", token);
+        String tokenKey = DigestUtils.md5DigestAsHex(token.getBytes());
+        redisUtil.set("token"+tokenKey, token);
         // 返回成功
         return ResponseResult.SUCCESS("登录成功！").setData(token);
     }
@@ -77,7 +85,7 @@ public class LoginServiceImpl implements LoginService {
      * @return 返回结果 和 token
      */
     @Override
-    public ResponseResult adminLogin(String number, String password, HttpSession session) {
+    public ResponseResult adminLogin(String number, String password) {
         // 判断是否为空
         if (number == null && password == null){
             return ResponseResult.FAILED("账号为空！");
@@ -102,21 +110,25 @@ public class LoginServiceImpl implements LoginService {
         claims.put("name", number);
         String token = JwtUtils.createToken(claims);
         // 存放token
-        session.setAttribute("token", token);
-        System.out.println(token);
+        String tokenKey = DigestUtils.md5DigestAsHex(token.getBytes());
+        redisUtil.set("token"+tokenKey, token);
         // 返回成功
         return ResponseResult.SUCCESS("登录成功！").setData(token);
     }
 
     /**
      * 注销登录
-     * @param session session
      * @return 返回结果
      */
     @Override
-    public ResponseResult LoginOut(HttpSession session) {
+    public ResponseResult LoginOut(HttpServletRequest request) {
+        // 获取token
+        String token = request.getHeader("token");
         // 删除session中的token
-        session.removeAttribute("token");
+        String tokenKey = DigestUtils.md5DigestAsHex(token.getBytes());
+        if (redisUtil.hasKey("token"+tokenKey)){
+            redisUtil.del("token"+tokenKey);
+        }
         return ResponseResult.SUCCESS("注销登录成功！");
     }
 }

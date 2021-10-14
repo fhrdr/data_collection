@@ -7,6 +7,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -22,8 +23,8 @@ public class LoginController {
      * @return 返回登录结果
      */
     @GetMapping("/admin")
-    ResponseResult admin(String name , String password, HttpSession session){
-        return loginService.adminLogin(name , password, session);
+    ResponseResult admin(String name , String password){
+        return loginService.adminLogin(name , password);
     }
 
     /**
@@ -33,18 +34,17 @@ public class LoginController {
      * @return 返回登录结果
      */
     @GetMapping("/login")
-    ResponseResult login(String number , String password, HttpSession session){
-        return loginService.studentLogin(number , password, session);
+    ResponseResult login(String number , String password){
+        return loginService.studentLogin(number , password);
     }
 
     /**
      * 注销登录
-     * @param session session
      * @return 返回结果
      */
     @GetMapping("/loginOut")
-    ResponseResult loginOut(HttpSession session){
-        return loginService.LoginOut(session);
+    ResponseResult loginOut(HttpServletRequest request){
+        return loginService.LoginOut(request);
     }
 
     /**

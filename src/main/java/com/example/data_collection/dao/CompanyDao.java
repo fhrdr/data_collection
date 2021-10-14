@@ -12,7 +12,7 @@ public interface CompanyDao extends JpaRepository<Company , Long>,
 
     // 获取所有列表信息
     @Query(nativeQuery = true , value = "SELECT\n" +
-            "\tb.st_id,b.st_name,a.c_name,b.st_pay,b.st_need,b.st_duration\n" +
+            "\tb.st_id,b.st_name,a.c_name,b.st_pay,b.st_need,b.st_duration,b.st_start,b.st_end,a.c_address\n" +
             "FROM\n" +
             "\tt_company AS a\n" +
             "\tINNER JOIN\n" +

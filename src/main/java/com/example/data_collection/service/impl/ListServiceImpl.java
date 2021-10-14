@@ -7,6 +7,7 @@ import com.example.data_collection.result.ResponseResult;
 import com.example.data_collection.service.ListService;
 import com.example.data_collection.utils.JwtUtils;
 import com.example.data_collection.utils.ListUtils;
+import com.example.data_collection.utils.RedisUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,8 +15,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 import javax.persistence.criteria.*;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -26,6 +29,8 @@ public class ListServiceImpl implements ListService {
     private CompanyDao companyDao;
     @Autowired
     private StationDao stationDao;
+    @Autowired
+    private RedisUtil redisUtil;
 
     /**
      * 根据公司名 模糊查询列表
@@ -98,9 +103,11 @@ public class ListServiceImpl implements ListService {
      * @return 返回信息
      */
     @Override
-    public ResponseResult selectInfo(Long stId , HttpSession session) {
+    public ResponseResult selectInfo(Long stId, HttpServletRequest request) {
+        // 获取token
+        String tokenKey = DigestUtils.md5DigestAsHex(request.getParameter("token").getBytes());
         // 获取学生ID
-        String token = (String) session.getAttribute("token");
+        String token = (String) redisUtil.get("token"+tokenKey);
         String sId = null;
         try {
             Claims claims = JwtUtils.parseJWT(token);

@@ -3,11 +3,11 @@ package com.example.data_collection.service;
 import com.example.data_collection.entity.Student;
 import com.example.data_collection.result.ResponseResult;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 public interface StudentService {
     // 获取学生个人信息
-    ResponseResult getStudentInfo(HttpSession session);
+    ResponseResult getStudentInfo(HttpServletRequest request);
 
     // 杨修伟部分
     ResponseResult findAllStudent();

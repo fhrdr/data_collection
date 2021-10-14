@@ -6,15 +6,18 @@ import com.example.data_collection.entity.StudentStationInfo;
 import com.example.data_collection.result.ResponseResult;
 import com.example.data_collection.service.StudentStationService;
 import com.example.data_collection.utils.JwtUtils;
+import com.example.data_collection.utils.RedisUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
@@ -24,17 +27,20 @@ public class StudentStationServiceImpl implements StudentStationService {
     // 注入
     @Autowired
     private StudentStationDao studentStationDao;
+    @Autowired
+    private RedisUtil redisUtil;
 
     /**
      * 学生选择岗位
      * @param stId 岗位ID
-     * @param session session
      * @return 返回选择结果
      */
     @Override
-    public ResponseResult studentChooseStation(Long stId, HttpSession session) {
+    public ResponseResult studentChooseStation(Long stId, HttpServletRequest request) {
+        // 获取token
+        String tokenKey = DigestUtils.md5DigestAsHex(request.getHeader("token").getBytes());
         // 获取学生id
-        String token = (String) session.getAttribute("token");
+        String token = (String) redisUtil.get("token"+tokenKey);
         String sId = null;
         try {
             Claims claims = JwtUtils.parseJWT(token);
@@ -81,13 +87,14 @@ public class StudentStationServiceImpl implements StudentStationService {
     /**
      * 学生取消岗位
      * @param stId 岗位ID
-     * @param session session
      * @return 返回选择结果
      */
     @Override
-    public ResponseResult studentCancelStation(Long stId, HttpSession session) {
+    public ResponseResult studentCancelStation(Long stId, HttpServletRequest request) {
+        // 获取token
+        String tokenKey = DigestUtils.md5DigestAsHex(request.getHeader("token").getBytes());
         // 获取学生id
-        String token = (String) session.getAttribute("token");
+        String token = (String) redisUtil.get("token"+tokenKey);
         String sId = null;
         try {
             Claims claims = JwtUtils.parseJWT(token);

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -64,12 +65,11 @@ public class ListController {
     /**
      * 通过岗位ID 查询详细信息
      * @param stId 岗位ID
-     * @param session session
      * @return 返回查询结果
      */
     @PreAuthorize("@permission.use()")
     @GetMapping("/selectInfo/{stId}")
-    ResponseResult selectInfo(@PathVariable("stId") Long stId , HttpSession session){
-        return listService.selectInfo(stId , session);
+    ResponseResult selectInfo(@PathVariable("stId") Long stId , HttpServletRequest request){
+        return listService.selectInfo(stId, request);
     }
 }

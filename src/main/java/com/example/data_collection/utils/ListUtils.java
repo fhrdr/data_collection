@@ -12,7 +12,7 @@ public class ListUtils {
     public static HashMap<String, Object> change(List<Object[]> objects, int page, int size){
         List<Lists> lists = new ArrayList<>();
         for (Object[] o : objects) {
-            lists.add(new Lists(o[0],o[1],o[2],o[3],o[4],o[5]));
+            lists.add(new Lists(o[0],o[1],o[2],o[3],o[4],o[5],o[6],o[7],o[8]));
         }
         HashMap<String, Object> result = new HashMap<>();
         result.put("data", lists);

@@ -9,15 +9,18 @@ import com.example.data_collection.entity.StudentStation;
 import com.example.data_collection.result.ResponseResult;
 import com.example.data_collection.service.StudentService;
 import com.example.data_collection.utils.JwtUtils;
+import com.example.data_collection.utils.RedisUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
@@ -30,15 +33,19 @@ public class StudentServiceImpl implements StudentService {
     private StudentStationDao studentStationDao;
     @Autowired
     private StationDao stationDao;
+    @Autowired
+    private RedisUtil redisUtil;
 
     /**
      * 获取学生个人基本信息
      * @return 返回信息
      */
     @Override
-    public ResponseResult getStudentInfo(HttpSession session) {
+    public ResponseResult getStudentInfo(HttpServletRequest request) {
+        // 获取token
+        String tokenKey = DigestUtils.md5DigestAsHex(request.getParameter("token").getBytes());
         // 获取学生ID
-        String token = (String) session.getAttribute("token");
+        String token = (String) redisUtil.get("token"+tokenKey);
         String sId = null;
         try {
             Claims claims = JwtUtils.parseJWT(token);

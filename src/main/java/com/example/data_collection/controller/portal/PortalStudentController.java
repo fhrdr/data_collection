@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -19,12 +20,11 @@ public class PortalStudentController {
 
     /**
      * 获取学生基本信息
-     * @param session session
      * @return 返回结果
      */
     @PreAuthorize("@permission.use()")
     @GetMapping("/getStudentInfo")
-    ResponseResult getStudentInfo(HttpSession session){
-        return studentService.getStudentInfo(session);
+    ResponseResult getStudentInfo(HttpServletRequest request){
+        return studentService.getStudentInfo(request);
     }
 }

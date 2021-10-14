@@ -8,17 +8,47 @@ public class Lists {
     private String st_pay;
     private Integer st_need;
     private String st_duration;
+    private String c_start;
+    private String c_end;
+    private String c_address;
 
     // 构造方法
     public Lists() {
     }
-    public Lists(Object st_id, Object st_name, Object c_name, Object st_pay, Object st_need, Object st_duration) {
+    public Lists(Object st_id, Object st_name, Object c_name, Object st_pay, Object st_need, Object st_duration, Object c_start, Object c_end, Object c_address) {
         this.st_id = (Integer) st_id;
         this.st_name = (String) st_name;
         this.c_name = (String) c_name;
         this.st_pay = (String) st_pay;
         this.st_need = (Integer) st_need;
         this.st_duration = (String) st_duration;
+        this.c_start = (String) c_start;
+        this.c_end = (String) c_end;
+        this.c_address = (String) c_address;
+    }
+
+    public String getC_start() {
+        return c_start;
+    }
+
+    public void setC_start(String c_start) {
+        this.c_start = c_start;
+    }
+
+    public String getC_end() {
+        return c_end;
+    }
+
+    public void setC_end(String c_end) {
+        this.c_end = c_end;
+    }
+
+    public String getC_address() {
+        return c_address;
+    }
+
+    public void setC_address(String c_address) {
+        this.c_address = c_address;
     }
 
     public Integer getSt_id() {

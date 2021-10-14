@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -22,24 +23,22 @@ public class PortalStudentStationController {
     /**
      * 学生选择岗位
      * @param stId 岗位ID
-     * @param session session
      * @return 返回结果
      */
     @PreAuthorize("@permission.use()")
     @GetMapping("/chooseStation/{stId}")
-    ResponseResult chooseStation(@PathVariable("stId") Long stId , HttpSession session){
-        return studentStationService.studentChooseStation(stId , session);
+    ResponseResult chooseStation(@PathVariable("stId") Long stId , HttpServletRequest request){
+        return studentStationService.studentChooseStation(stId , request);
     }
 
     /**
      * 学生取消岗位
      * @param stId 岗位ID
-     * @param session session
      * @return 返回结果
      */
     @PreAuthorize("@permission.use()")
     @GetMapping("/cancelStation/{stId}")
-    ResponseResult cancelStation(@PathVariable("stId") Long stId , HttpSession session){
-        return studentStationService.studentCancelStation(stId , session);
+    ResponseResult cancelStation(@PathVariable("stId") Long stId , HttpServletRequest request){
+        return studentStationService.studentCancelStation(stId , request);
     }
 }
