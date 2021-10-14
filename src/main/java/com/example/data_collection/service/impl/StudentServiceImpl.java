@@ -73,7 +73,10 @@ public class StudentServiceImpl implements StudentService {
         List<StudentStation> studentStations = studentStationDao.findAll(new Specification<StudentStation>() {
             @Override
             public Predicate toPredicate(Root<StudentStation> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.equal(root.get("sId").as(Long.class) , finalSId);
+                return criteriaBuilder.and(
+                        criteriaBuilder.equal(root.get("sId").as(Long.class) , finalSId),
+                        criteriaBuilder.equal(root.get("ssStatus").as(Boolean.class) , true)
+                );
             }
         });
         // 数据处理
@@ -91,6 +94,38 @@ public class StudentServiceImpl implements StudentService {
         }
         result.put("stations", stations);
         return ResponseResult.SUCCESS("获取成功！").setData(result);
+    }
+
+    /**
+     * 学生修改密码部分
+     * @param request request
+     * @return 返回结果
+     */
+    @Override
+    public ResponseResult changePassword(String oldPassword, String newPassword, HttpServletRequest request) {
+        // 获取学生ID
+        String token = request.getParameter("token");
+        String sId = null;
+        try {
+            Claims claims = JwtUtils.parseJWT(token);
+            sId = claims.get("sId").toString();
+        } catch (Exception e){
+            ResponseResult.FAILED("修改密码失败！");
+        }
+        // 获取学生密码
+        assert sId != null;
+        Optional<Student> st = studentDao.findById(Long.valueOf(sId));
+        // 验证密码
+        String old = DigestUtils.md5DigestAsHex(oldPassword.getBytes());
+        Student save = st.get();
+        if (!old.equals(save.getSPassword())){
+            return ResponseResult.FAILED("旧密码错误");
+        }
+        // 修改密码
+        save.setSPassword(DigestUtils.md5DigestAsHex(newPassword.getBytes()));
+        studentDao.save(save);
+        // 返回结果
+        return ResponseResult.SUCCESS("修改密码成功！");
     }
 
 //    ------------------------------------------

@@ -34,7 +34,7 @@ public class Station {
      * 需求人数
      */
 	@Column(name = "st_need")
-    private Long stNeed;
+    private String stNeed;
 	/**
 	 * 职位描述
 	 */
@@ -87,6 +87,14 @@ public class Station {
     public void setStName(String stName) {
     this.stName = stName;
   }
+
+    public String getStNeed() {
+        return stNeed;
+    }
+
+    public void setStNeed(String stNeed) {
+        this.stNeed = stNeed;
+    }
 
     public Long getcId() {
         return cId;

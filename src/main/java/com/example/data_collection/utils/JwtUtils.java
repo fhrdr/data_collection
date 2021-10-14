@@ -13,7 +13,7 @@ public class JwtUtils {
     //盐值（密匙）
     private static String key = "ad128433d8e3356e7024009bf6add2ab";
 
-    private static long ttl = 24*60*60*1000; //2个小时
+    private static long ttl = 4*60*60*1000; //2个小时
 
     public String getKey() {
         return key;

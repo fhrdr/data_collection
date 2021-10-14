@@ -6,7 +6,7 @@ public class Lists {
     private String st_name;
     private String c_name;
     private String st_pay;
-    private Integer st_need;
+    private String st_need;
     private String st_duration;
     private String c_start;
     private String c_end;
@@ -20,7 +20,7 @@ public class Lists {
         this.st_name = (String) st_name;
         this.c_name = (String) c_name;
         this.st_pay = (String) st_pay;
-        this.st_need = (Integer) st_need;
+        this.st_need = (String) st_need;
         this.st_duration = (String) st_duration;
         this.c_start = (String) c_start;
         this.c_end = (String) c_end;
@@ -83,11 +83,11 @@ public class Lists {
         this.st_pay = st_pay;
     }
 
-    public Integer getSt_need() {
+    public String getSt_need() {
         return st_need;
     }
 
-    public void setSt_need(Integer st_need) {
+    public void setSt_need(String st_need) {
         this.st_need = st_need;
     }
 

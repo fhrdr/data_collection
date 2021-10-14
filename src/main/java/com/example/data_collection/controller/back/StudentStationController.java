@@ -34,7 +34,6 @@ public class StudentStationController {
      */
     @RequestMapping("/getStudent")
     public ResponseResult getStudentinfo(){
-
         return studentStationService.findStudentinfo();
     }
 

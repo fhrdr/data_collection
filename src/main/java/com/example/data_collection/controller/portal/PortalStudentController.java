@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
+@PreAuthorize("@permission.use()")
 @RequestMapping("/portal")
 public class PortalStudentController {
     // 注入
@@ -22,9 +23,20 @@ public class PortalStudentController {
      * 获取学生基本信息
      * @return 返回结果
      */
-    @PreAuthorize("@permission.use()")
     @GetMapping("/getStudentInfo")
     ResponseResult getStudentInfo(HttpServletRequest request){
         return studentService.getStudentInfo(request);
+    }
+
+    /**
+     * 学生修改密码
+     * @param oldPassword 旧密码
+     * @param newPassword 新密码
+     * @param request request
+     * @return 返回结果
+     */
+    @GetMapping("/changePassword")
+    ResponseResult changePassword(String oldPassword, String newPassword, HttpServletRequest request){
+        return studentService.changePassword(oldPassword, newPassword, request);
     }
 }

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 public interface StudentService {
     // 获取学生个人信息
     ResponseResult getStudentInfo(HttpServletRequest request);
+    // 修改密码
+    ResponseResult changePassword(String oldPassword, String newPassword, HttpServletRequest request);
 
     // 杨修伟部分
     //获取所有学生信息

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
+@PreAuthorize("@permission.use()")
 @RequestMapping("/portal")
 public class PortalStudentStationController {
     // 注入
@@ -25,7 +26,6 @@ public class PortalStudentStationController {
      * @param stId 岗位ID
      * @return 返回结果
      */
-    @PreAuthorize("@permission.use()")
     @GetMapping("/chooseStation/{stId}")
     ResponseResult chooseStation(@PathVariable("stId") Long stId , HttpServletRequest request){
         return studentStationService.studentChooseStation(stId , request);
@@ -36,7 +36,6 @@ public class PortalStudentStationController {
      * @param stId 岗位ID
      * @return 返回结果
      */
-    @PreAuthorize("@permission.use()")
     @GetMapping("/cancelStation/{stId}")
     ResponseResult cancelStation(@PathVariable("stId") Long stId , HttpServletRequest request){
         return studentStationService.studentCancelStation(stId , request);

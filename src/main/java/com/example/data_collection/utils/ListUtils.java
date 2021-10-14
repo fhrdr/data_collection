@@ -5,11 +5,12 @@ import com.example.data_collection.entity.Lists;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 // lists工具类
 public class ListUtils {
     // 把收到的 Object 转换为 Lists 类
-    public static HashMap<String, Object> change(List<Object[]> objects, int page, int size){
+    public static Map<String, Object> change(List<Object[]> objects, int page, int size){
         List<Lists> lists = new ArrayList<>();
         for (Object[] o : objects) {
             lists.add(new Lists(o[0],o[1],o[2],o[3],o[4],o[5],o[6],o[7],o[8]));
@@ -19,6 +20,33 @@ public class ListUtils {
         result.put("page", page+1);
         result.put("size", size);
         result.put("num", lists.size());
+        return result;
+    }
+
+    // 提取详细信息值
+    public static Map<String, Object> getInfo(List<Object[]> objects){
+        Object[] ob = objects.get(0);
+        Map<String , Object> result = new HashMap<String, Object>();
+        result.put("c_id", ob[0]);
+        result.put("c_name" , ob[1]);
+        result.put("c_people_num" , ob[2]);
+        result.put("c_nature" , ob[3]);
+        result.put("c_introduction" , ob[4]);
+        result.put("c_address" , ob[5]);
+        result.put("st_id" , ob[6]);
+        result.put("st_name" , ob[7]);
+        result.put("st_need" , ob[8]);
+        result.put("st_describe" , ob[9]);
+        result.put("st_pay" , ob[10]);
+        result.put("st_duration" , ob[11]);
+        result.put("st_start" , ob[12]);
+        result.put("st_end" , ob[13]);
+        result.put("st_contacts" , ob[14]);
+        result.put("st_phone" , ob[15]);
+        result.put("st_remarks" , ob[16]);
+        result.put("station_num" , ob[17]);
+        result.put("can_choose" , ob[18]);
+        result.put("is_choose" , ob[19]);
         return result;
     }
 }

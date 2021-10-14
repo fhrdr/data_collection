@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
+@PreAuthorize("@permission.use()")
 @RequestMapping("/portal")
 public class ListController {
     // 注入
@@ -26,7 +27,6 @@ public class ListController {
      * @param companyName 公司名
      * @return 返回结果
      */
-    @PreAuthorize("@permission.use()")
     @GetMapping("/searchCompany/{size}/{page}/{companyName}")
     ResponseResult searchCompany(@PathVariable("size") int size,
                                  @PathVariable("page") int page,
@@ -41,7 +41,6 @@ public class ListController {
      * @param stationName 岗位名
      * @return 返回结果
      */
-    @PreAuthorize("@permission.use()")
     @GetMapping("/searchStation/{size}/{page}/{stationName}")
     ResponseResult searchStation(@PathVariable("size") int size,
                                  @PathVariable("page") int page,
@@ -55,7 +54,6 @@ public class ListController {
      * @param page 页码
      * @return 返回结果
      */
-    @PreAuthorize("@permission.use()")
     @GetMapping("/listAll/{size}/{page}")
     ResponseResult listAll(@PathVariable("size") int size,
                              @PathVariable("page") int page){
@@ -67,7 +65,6 @@ public class ListController {
      * @param stId 岗位ID
      * @return 返回查询结果
      */
-    @PreAuthorize("@permission.use()")
     @GetMapping("/selectInfo/{stId}")
     ResponseResult selectInfo(@PathVariable("stId") Long stId , HttpServletRequest request){
         return listService.selectInfo(stId, request);

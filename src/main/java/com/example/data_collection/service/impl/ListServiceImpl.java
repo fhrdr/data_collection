@@ -20,7 +20,9 @@ import org.springframework.util.DigestUtils;
 import javax.persistence.criteria.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ListServiceImpl implements ListService {
@@ -47,10 +49,6 @@ public class ListServiceImpl implements ListService {
         page-=1;
         // 模糊查询
         List<Object[]> companies = companyDao.searchCompanies(companyName, page*size, size);
-        // 数据判断
-        if (companies.size() == 0) {
-            return ResponseResult.FAILED("数据不存在！");
-        }
         return ResponseResult.SUCCESS("获取成功！").setData(ListUtils.change(companies, page, size));
     }
 
@@ -90,10 +88,6 @@ public class ListServiceImpl implements ListService {
         page-=1;
         // 查询所有数据
         List<Object[]> all = companyDao.listAll(page*size, size);
-        // 判断数据
-        if (all.size() == 0) {
-            return ResponseResult.FAILED("数据不存在！");
-        }
         return ResponseResult.SUCCESS("获取成功！").setData(ListUtils.change(all, page, size));
     }
 
@@ -125,7 +119,9 @@ public class ListServiceImpl implements ListService {
         if (objects.size() == 0) {
             return ResponseResult.FAILED("数据为空！");
         }
+        // 提取值
+        Map<String, Object> result = ListUtils.getInfo(objects);
         // 返回结果
-        return ResponseResult.SUCCESS("查询成功！").setData(objects);
+        return ResponseResult.SUCCESS("查询成功！").setData(result);
     }
 }

@@ -24,7 +24,7 @@ public interface CompanyDao extends JpaRepository<Company , Long>,
 
     // 通过公司名 模糊查询
     @Query(nativeQuery = true , value = "SELECT\n" +
-            "\tb.st_id,b.st_name,a.c_name,b.st_pay,b.st_need,b.st_duration\n" +
+            "\tb.st_id,b.st_name,a.c_name,b.st_pay,b.st_need,b.st_duration,b.st_start,b.st_end,a.c_address\n" +
             "FROM\n" +
             "\tt_company AS a\n" +
             "\tINNER JOIN\n" +
@@ -35,6 +35,8 @@ public interface CompanyDao extends JpaRepository<Company , Long>,
             "\ta.c_name like %?1%" +
             "\tLIMIT ?2,?3")
     List<Object[]> searchCompanies(String companyName, int start, int end);
+
+
 
     //杨修伟部分
     //根据公司名查询

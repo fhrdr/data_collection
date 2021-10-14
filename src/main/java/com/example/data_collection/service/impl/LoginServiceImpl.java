@@ -123,7 +123,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public ResponseResult LoginOut(HttpServletRequest request) {
         // 获取token
-        String token = request.getHeader("token");
+        String token = request.getParameter("token");
         // 删除session中的token
         String tokenKey = DigestUtils.md5DigestAsHex(token.getBytes());
         if (redisUtil.hasKey("token"+tokenKey)){

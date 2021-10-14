@@ -37,7 +37,7 @@ public class StudentStationServiceImpl implements StudentStationService {
     @Override
     public ResponseResult studentChooseStation(Long stId, HttpServletRequest request) {
         // 获取token
-        String tokenKey = DigestUtils.md5DigestAsHex(request.getHeader("token").getBytes());
+        String tokenKey = DigestUtils.md5DigestAsHex(request.getParameter("token").getBytes());
         // 获取学生id
         String token = (String) redisUtil.get("token"+tokenKey);
         String sId = null;
@@ -91,7 +91,7 @@ public class StudentStationServiceImpl implements StudentStationService {
     @Override
     public ResponseResult studentCancelStation(Long stId, HttpServletRequest request) {
         // 获取token
-        String tokenKey = DigestUtils.md5DigestAsHex(request.getHeader("token").getBytes());
+        String tokenKey = DigestUtils.md5DigestAsHex(request.getParameter("token").getBytes());
         // 获取学生id
         String token = (String) redisUtil.get("token"+tokenKey);
         String sId = null;
@@ -156,7 +156,6 @@ public class StudentStationServiceImpl implements StudentStationService {
      */
     @Override
     public ResponseResult findBySclass(String sClass) {
-        System.out.println(sClass);
         return ResponseResult.SUCCESS("查询成功").setData(studentStationDao.findBySClass(sClass));
     }
 }
