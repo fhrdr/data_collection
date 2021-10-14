@@ -29,4 +29,12 @@ public interface AdminService {
      * @param admin 管理员信息
      */
     ResponseResult updateAdmin(Admin admin);
+
+    /**
+     * 删除管理员信息
+     * @param id
+     * @return
+     */
+
+    ResponseResult deleteAdminById(Long id);
 }

@@ -2,7 +2,6 @@ package com.example.data_collection.service.impl;
 
 import com.example.data_collection.dao.StudentStationDao;
 import com.example.data_collection.entity.StudentStation;
-import com.example.data_collection.entity.StudentStationInfo;
 import com.example.data_collection.result.ResponseResult;
 import com.example.data_collection.service.StudentStationService;
 import com.example.data_collection.utils.JwtUtils;
@@ -130,13 +129,34 @@ public class StudentStationServiceImpl implements StudentStationService {
 
 //    -----------------------------------------
     // 杨修伟部分
+
+    /**
+     * 添加学生-岗位信息
+     * @param studentStation
+     * @return
+     */
     @Override
     public ResponseResult insertStudentStation(StudentStation studentStation) {
         return ResponseResult.SUCCESS("添加成功").setData(studentStationDao.save(studentStation));
     }
 
+    /**
+     * 关联查询学生-岗位-公司信息
+     * @return
+     */
     @Override
-    public List<StudentStationInfo> findStudentinfo() {
-        return studentStationDao.findAllSs();
+    public ResponseResult findStudentinfo() {
+        return ResponseResult.SUCCESS("查询成功").setData(studentStationDao.findAllSs());
+    }
+
+    /**
+     * 通过班级进行关联查询学生-岗位信息
+     * @param sClass
+     * @return
+     */
+    @Override
+    public ResponseResult findBySclass(String sClass) {
+        System.out.println(sClass);
+        return ResponseResult.SUCCESS("查询成功").setData(studentStationDao.findBySClass(sClass));
     }
 }

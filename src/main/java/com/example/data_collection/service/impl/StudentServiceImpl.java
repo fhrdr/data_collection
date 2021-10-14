@@ -95,23 +95,54 @@ public class StudentServiceImpl implements StudentService {
 
 //    ------------------------------------------
     // 杨修伟部分
+
+    /**
+     * 查询所有学生信息
+     * @return
+     */
     @Override
     public ResponseResult findAllStudent() {
         return ResponseResult.SUCCESS("查找成功").setData(studentDao.findAll());
     }
 
+    /**
+     * 通过部门查询学生信息
+     * @param sDepartment
+     * @return
+     */
     @Override
     public ResponseResult findStudentByDepartment(String sDepartment) {
         return ResponseResult.SUCCESS("查找成功").setData(studentDao.findBysDepartment(sDepartment));
     }
 
+    /**
+     * 添加学生信息
+     * @param student
+     * @return
+     */
     @Override
     public ResponseResult insertStudent(Student student) {
         return ResponseResult.SUCCESS("添加成功").setData(studentDao.save(student));
     }
 
+    /**
+     * 修改学生信息
+     * @param student
+     * @return
+     */
     @Override
     public ResponseResult updateStudent(Student student) {
         return ResponseResult.SUCCESS("修改成功").setData(studentDao.save(student));
+    }
+
+    /**
+     * 通过id删除学生信息
+     * @param sId
+     * @return
+     */
+    @Override
+    public ResponseResult deleteStudent(Long sId) {
+        System.out.println(sId);
+        return ResponseResult.SUCCESS("删除成功").setData(studentDao.deleteByid(sId));
     }
 }

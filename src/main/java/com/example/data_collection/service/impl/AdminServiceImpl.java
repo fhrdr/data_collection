@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AdminServiceImpl implements AdminService {
+    //注入
     @Autowired
     private AdminDao adminDao;
 
@@ -55,5 +56,10 @@ public class AdminServiceImpl implements AdminService {
             return ResponseResult.FAILED("该用户不存在");
         }
         return ResponseResult.SUCCESS("修改成功").setData(adminDao.save(admin));
+    }
+
+    @Override
+    public ResponseResult deleteAdminById(Long id) {
+        return ResponseResult.SUCCESS("删除成功").setData(adminDao.deleteByid(id));
     }
 }
