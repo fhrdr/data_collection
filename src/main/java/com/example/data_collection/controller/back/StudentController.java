@@ -4,6 +4,7 @@ import com.example.data_collection.entity.Student;
 import com.example.data_collection.result.ResponseResult;
 import com.example.data_collection.service.StudentService;
 import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -20,7 +21,7 @@ import java.awt.print.Pageable;
 @RequestMapping("/back/student")
 public class StudentController {
     //注入
-    @Resource
+    @Autowired
     private StudentService studentService;
 
     /**

@@ -3,6 +3,7 @@ package com.example.data_collection.controller.back;
 import com.example.data_collection.entity.Station;
 import com.example.data_collection.result.ResponseResult;
 import com.example.data_collection.service.StationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +15,7 @@ import javax.websocket.server.PathParam;
 @RequestMapping("/back/station")
 public class StationController {
     //注入
-    @Resource
+    @Autowired
     private StationService stationService;
 
     /**

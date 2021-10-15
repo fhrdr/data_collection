@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/back/admin")
 public class AdminController {
     //注入
-    @Resource
+    @Autowired
     private AdminService adminService;
 
     /**
