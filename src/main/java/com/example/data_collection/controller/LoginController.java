@@ -23,8 +23,8 @@ public class LoginController {
      * @return 返回登录结果
      */
     @GetMapping("/admin")
-    ResponseResult admin(String name , String password){
-        return loginService.adminLogin(name , password);
+    ResponseResult admin(String name , String password, HttpServletRequest request){
+        return loginService.adminLogin(name , password, request);
     }
 
     /**
@@ -34,8 +34,8 @@ public class LoginController {
      * @return 返回登录结果
      */
     @GetMapping("/login")
-    ResponseResult login(String number , String password){
-        return loginService.studentLogin(number , password);
+    ResponseResult login(String number , String password, HttpServletRequest request){
+        return loginService.studentLogin(number , password, request);
     }
 
     /**
@@ -53,6 +53,6 @@ public class LoginController {
      */
     @GetMapping("/error403")
     ResponseResult error(){
-        return ResponseResult.FAILED("请重新登录！");
+        return ResponseResult.FAILED("登录超时，请重新登录");
     }
 }

@@ -3,6 +3,7 @@ package com.example.data_collection.service.impl;
 import com.example.data_collection.dao.AdminDao;
 import com.example.data_collection.dao.StudentDao;
 import com.example.data_collection.utils.JwtUtils;
+import com.example.data_collection.utils.PrintIpAddress;
 import com.example.data_collection.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,16 +41,16 @@ public class PermissionService {
         } catch (Exception e){
             return false;
         }
+        // 日志打印 IP 地址
+        String ip = PrintIpAddress.getIpAddress(request);
         // 从 redis 获取 token
-        String tokenKey = DigestUtils.md5DigestAsHex(token.getBytes());
         String redisToken = null;
-        if (redisUtil.hasKey("token"+tokenKey)){
-            redisToken = (String) redisUtil.get("token"+tokenKey);
+        if (redisUtil.hasKey("token"+ip)){
+            redisToken = (String) redisUtil.get("token"+ip);
         }
         if (redisToken==null){
             return false;
         }
         return redisToken.equals(token);
     }
-
 }

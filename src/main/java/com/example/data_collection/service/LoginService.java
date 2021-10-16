@@ -8,10 +8,10 @@ import javax.servlet.http.HttpSession;
 
 public interface LoginService {
     // 学生登录
-    ResponseResult studentLogin(String number , String password);
+    ResponseResult studentLogin(String number , String password, HttpServletRequest request);
 
     // 管理员登录
-    ResponseResult adminLogin(String number , String password);
+    ResponseResult adminLogin(String number , String password, HttpServletRequest request);
 
     // 注销登录
     ResponseResult LoginOut(HttpServletRequest request);

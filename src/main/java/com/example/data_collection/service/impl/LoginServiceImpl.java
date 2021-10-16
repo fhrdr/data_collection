@@ -7,6 +7,7 @@ import com.example.data_collection.entity.Student;
 import com.example.data_collection.result.ResponseResult;
 import com.example.data_collection.service.LoginService;
 import com.example.data_collection.utils.JwtUtils;
+import com.example.data_collection.utils.PrintIpAddress;
 import com.example.data_collection.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -40,13 +41,13 @@ public class LoginServiceImpl implements LoginService {
      * @return 返回结果 和 token
      */
     @Override
-    public ResponseResult studentLogin(String number, String password) {
+    public ResponseResult studentLogin(String number, String password , HttpServletRequest request) {
         // 判断是否为空
         if (number == null){
-            return ResponseResult.FAILED("账号为空！");
+            return ResponseResult.FAILED("账号为空");
         }
         if (password == null){
-            return ResponseResult.FAILED("密码为空！");
+            return ResponseResult.FAILED("密码为空");
         }
         // 查询账号
         List<Student> students = studentDao.findAll(new Specification<Student>() {
@@ -59,9 +60,9 @@ public class LoginServiceImpl implements LoginService {
         password = DigestUtils.md5DigestAsHex(password.getBytes());
         // 登录判断
         if (students.size() == 0){
-            return ResponseResult.FAILED("账号错误！");
+            return ResponseResult.FAILED("账号错误");
         } else if(!password.equals(students.get(0).getSPassword())){
-            return ResponseResult.FAILED("密码错误！");
+            return ResponseResult.FAILED("密码错误");
         }
         // 生成 token
         Map<String, Object> claims = new HashMap<>();
@@ -71,11 +72,12 @@ public class LoginServiceImpl implements LoginService {
         claims.put("class", students.get(0).getClass());
         claims.put("phone", students.get(0).getSPhone());
         String token = JwtUtils.createToken(claims);
+        // 日志打印 IP 地址
+        String ip = PrintIpAddress.getIpAddress(request, "登录学生选择系统...");
         // 存放 token
-        String tokenKey = DigestUtils.md5DigestAsHex(token.getBytes());
-        redisUtil.set("token"+tokenKey, token);
+        redisUtil.set("token"+ip, token);
         // 返回成功
-        return ResponseResult.SUCCESS("登录成功！").setData(token);
+        return ResponseResult.SUCCESS("登录成功").setData(token);
     }
 
     /**
@@ -85,7 +87,7 @@ public class LoginServiceImpl implements LoginService {
      * @return 返回结果 和 token
      */
     @Override
-    public ResponseResult adminLogin(String number, String password) {
+    public ResponseResult adminLogin(String number, String password, HttpServletRequest request) {
         // 判断是否为空
         if (number == null && password == null){
             return ResponseResult.FAILED("账号为空！");
@@ -109,9 +111,10 @@ public class LoginServiceImpl implements LoginService {
         HashMap<String, Object> claims = new HashMap<>();
         claims.put("name", number);
         String token = JwtUtils.createToken(claims);
+        // 日志打印 IP 地址
+        String ip = PrintIpAddress.getIpAddress(request, "登录后台系统...");
         // 存放token
-        String tokenKey = DigestUtils.md5DigestAsHex(token.getBytes());
-        redisUtil.set("token"+tokenKey, token);
+        redisUtil.set("token"+ip, token);
         // 返回成功
         return ResponseResult.SUCCESS("登录成功！").setData(token);
     }
@@ -124,10 +127,11 @@ public class LoginServiceImpl implements LoginService {
     public ResponseResult LoginOut(HttpServletRequest request) {
         // 获取token
         String token = request.getParameter("token");
+        // 日志打印 IP 地址
+        String ip = PrintIpAddress.getIpAddress(request, "退出登录...");
         // 删除session中的token
-        String tokenKey = DigestUtils.md5DigestAsHex(token.getBytes());
-        if (redisUtil.hasKey("token"+tokenKey)){
-            redisUtil.del("token"+tokenKey);
+        if (redisUtil.hasKey("token"+ip)){
+            redisUtil.del("token"+ip);
         }
         return ResponseResult.SUCCESS("注销登录成功！");
     }

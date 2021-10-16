@@ -22,7 +22,7 @@ public interface StudentStationService {
      */
     ResponseResult insertStudentStation(StudentStation studentStation);
     //  查询学生姓名，部门，班级，公司，岗位，选择时间信息
-    ResponseResult findStudentinfo();
+    ResponseResult findStudentInfo();
     //通过班级查询学生，岗位，公司的相关信息
-    ResponseResult findBySclass(String sClass);
+    ResponseResult findBySClass(String sClass);
 }

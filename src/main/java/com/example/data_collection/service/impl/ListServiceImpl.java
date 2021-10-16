@@ -7,6 +7,7 @@ import com.example.data_collection.result.ResponseResult;
 import com.example.data_collection.service.ListService;
 import com.example.data_collection.utils.JwtUtils;
 import com.example.data_collection.utils.ListUtils;
+import com.example.data_collection.utils.PrintIpAddress;
 import com.example.data_collection.utils.RedisUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,9 +100,7 @@ public class ListServiceImpl implements ListService {
     @Override
     public ResponseResult selectInfo(Long stId, HttpServletRequest request) {
         // 获取token
-        String tokenKey = DigestUtils.md5DigestAsHex(request.getParameter("token").getBytes());
-        // 获取学生ID
-        String token = (String) redisUtil.get("token"+tokenKey);
+        String token = request.getParameter("token");
         String sId = null;
         try {
             Claims claims = JwtUtils.parseJWT(token);

@@ -31,7 +31,6 @@ public class AdminServiceImpl implements AdminService {
 
     /**
      * 添加管理员信息
-     *
      * @param admin
      * @return
      */

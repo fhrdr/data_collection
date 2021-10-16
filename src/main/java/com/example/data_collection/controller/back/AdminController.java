@@ -31,7 +31,7 @@ public class AdminController {
 
     /**
      * 通过id查询管理员
-     * @param id
+     * @param id 用户ID
      * @return
      */
     @RequestMapping("/findById/{id}")

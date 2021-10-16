@@ -4,11 +4,9 @@ import com.example.data_collection.entity.StudentStation;
 import com.example.data_collection.result.ResponseResult;
 import com.example.data_collection.service.StudentStationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import javax.websocket.server.PathParam;
 
 @RestController
@@ -34,8 +32,8 @@ public class StudentStationController {
      * @return
      */
     @RequestMapping("/getStudent")
-    public ResponseResult getStudentinfo(){
-        return studentStationService.findStudentinfo();
+    public ResponseResult getStudentInfo(){
+        return studentStationService.findStudentInfo();
     }
 
     /**
@@ -45,7 +43,7 @@ public class StudentStationController {
      */
     @RequestMapping("/getByClass")
     public ResponseResult getByClass(@PathParam("sClass") String sClass){
-        return studentStationService.findBySclass(sClass);
+        return studentStationService.findBySClass(sClass);
     }
 
 
