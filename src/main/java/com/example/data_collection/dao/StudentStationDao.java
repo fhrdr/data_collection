@@ -48,4 +48,11 @@ public interface StudentStationDao extends JpaRepository<StudentStation , Long>,
             "WHERE\n" +
             "\ts_class LIKE %?1% AND t_student_station.ss_status=1",nativeQuery = true)
     List<Object[]> findBySClass(String sClass);
+
+    // 获取选择岗位数量 ;
+    @Query(value = "select count(*)>=3 " +
+            "from t_student_station " +
+            "where " +
+            "st_id=?1 and s_id=?2 and ss_status=1",nativeQuery = true)
+    Object findChooseCount(Long st_id, Long s_id);
 }

@@ -1,11 +1,14 @@
 package com.example.data_collection.service.impl;
 
+import com.example.data_collection.dao.StationDao;
 import com.example.data_collection.dao.StudentStationDao;
+import com.example.data_collection.entity.Station;
 import com.example.data_collection.entity.StudentStation;
 import com.example.data_collection.result.ResponseResult;
 import com.example.data_collection.service.StudentStationService;
 import com.example.data_collection.utils.JwtUtils;
 import com.example.data_collection.utils.RedisUtil;
+import com.example.data_collection.utils.TimeUtils;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -27,7 +30,7 @@ public class StudentStationServiceImpl implements StudentStationService {
     @Autowired
     private StudentStationDao studentStationDao;
     @Autowired
-    private RedisUtil redisUtil;
+    private StationDao stationDao;
 
     /**
      * 学生选择岗位
@@ -36,6 +39,11 @@ public class StudentStationServiceImpl implements StudentStationService {
      */
     @Override
     public ResponseResult studentChooseStation(Long stId, HttpServletRequest request) {
+        // 判断是否在规定时间范围内
+        Station station = stationDao.getById(stId);
+        if (!TimeUtils.compareTime(station.getStStart(),station.getStEnd())){
+            return ResponseResult.FAILED("操作不在规定时间范围内");
+        };
         // 获取token
         String token = request.getParameter("token");
         String sId = null;
@@ -48,8 +56,12 @@ public class StudentStationServiceImpl implements StudentStationService {
         if (sId == null){
             return ResponseResult.FAILED("请重新登录！");
         }
-        // 判断是否存在
         Long finalSId = Long.valueOf(sId);
+        // 判断是否选择满了
+        if (Boolean.parseBoolean(studentStationDao.findChooseCount(stId , finalSId).toString())){
+            ResponseResult.FAILED("已经超过最大选择限制！");
+        };
+        // 判断是否存在
         List<StudentStation> studentStations = studentStationDao.findAll(new Specification<StudentStation>() {
             @Override
             public Predicate toPredicate(Root<StudentStation> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
@@ -67,7 +79,7 @@ public class StudentStationServiceImpl implements StudentStationService {
                 studentStationDao.save(studentStation);
                 return ResponseResult.SUCCESS("选择岗位成功！");
             }else {
-                return ResponseResult.FAILED("已经选择岗位了！");
+                return ResponseResult.FAILED("已经选择该岗位了！");
             }
         }
         // 添加信息
@@ -78,7 +90,7 @@ public class StudentStationServiceImpl implements StudentStationService {
         studentStation.setSsTime(new Date());
         studentStationDao.save(studentStation);
         // 返回结果
-        return ResponseResult.SUCCESS("选择成功！");
+        return ResponseResult.SUCCESS("选择岗位成功！");
     }
 
     /**
@@ -88,6 +100,11 @@ public class StudentStationServiceImpl implements StudentStationService {
      */
     @Override
     public ResponseResult studentCancelStation(Long stId, HttpServletRequest request) {
+        // 判断是否在规定时间范围内
+        Station station = stationDao.getById(stId);
+        if (!TimeUtils.compareTime(station.getStStart(),station.getStEnd())){
+            return ResponseResult.FAILED("操作不在规定时间范围内");
+        };
         // 获取token
         String token = request.getParameter("token");
         String sId = null;
