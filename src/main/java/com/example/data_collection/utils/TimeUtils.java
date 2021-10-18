@@ -13,9 +13,9 @@ public class TimeUtils {
             String[] starts = start.split("-");
             String[] ends = end.split("-");
             // 判断时间
-            if (Integer.parseInt(now[0])>=Integer.parseInt(starts[0]) || Integer.parseInt(now[0])<=Integer.parseInt(ends[0])){
-                if (Integer.parseInt(now[1])>=Integer.parseInt(starts[1]) || Integer.parseInt(now[1])<=Integer.parseInt(ends[1])){
-                    return Integer.parseInt(now[2]) >= Integer.parseInt(starts[2]) || Integer.parseInt(now[2]) <= Integer.parseInt(ends[2]);
+            if (Integer.parseInt(now[0])>=Integer.parseInt(starts[0]) && Integer.parseInt(now[0]) <= Integer.parseInt(ends[0])){
+                if (Integer.parseInt(now[1])>=Integer.parseInt(starts[1]) && Integer.parseInt(now[1]) <= Integer.parseInt(ends[1])){
+                    return Integer.parseInt(now[2]) >= Integer.parseInt(starts[2]) && Integer.parseInt(now[2]) <= Integer.parseInt(ends[2]);
                 }else {
                     return false;
                 }

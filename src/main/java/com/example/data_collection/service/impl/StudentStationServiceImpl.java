@@ -58,9 +58,9 @@ public class StudentStationServiceImpl implements StudentStationService {
         }
         Long finalSId = Long.valueOf(sId);
         // 判断是否选择满了
-        if (Boolean.parseBoolean(studentStationDao.findChooseCount(stId , finalSId).toString())){
-            ResponseResult.FAILED("已经超过最大选择限制！");
-        };
+        if (Integer.parseInt(studentStationDao.findChooseCount(finalSId).toString()) >= 3){
+            return ResponseResult.FAILED("已经超过最大选择限制！");
+        }
         // 判断是否存在
         List<StudentStation> studentStations = studentStationDao.findAll(new Specification<StudentStation>() {
             @Override
