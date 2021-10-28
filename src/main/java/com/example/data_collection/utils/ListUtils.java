@@ -49,4 +49,27 @@ public class ListUtils {
         result.put("is_choose" , ob[19]);
         return result;
     }
+
+    // 提取岗位信息
+    public static List<Map<String , Object>> getStations(List<Object[]> objects){
+        List<Map<String , Object>> result = new ArrayList<>();
+        for (Object[] o : objects){
+            Map<String , Object> map = new HashMap<>();
+            map.put("stId" , o[0]);
+            map.put("cId" , o[1]);
+            map.put("stName" , o[2]);
+            map.put("stNeed" , o[3]);
+            map.put("stDescribe" , o[4]);
+            map.put("stPay" , o[5]);
+            map.put("stDuration" , o[6]);
+            map.put("stStart" , o[7]);
+            map.put("stEnd" , o[8]);
+            map.put("stContacts" , o[9]);
+            map.put("stPhone" , o[10]);
+            map.put("stRemarks" , o[11]);
+            map.put("cName" , o[12]);
+            result.add(map);
+        }
+        return result;
+    }
 }

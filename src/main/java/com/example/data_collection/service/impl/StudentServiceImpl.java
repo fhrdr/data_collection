@@ -9,10 +9,11 @@ import com.example.data_collection.entity.StudentStation;
 import com.example.data_collection.result.ResponseResult;
 import com.example.data_collection.service.StudentService;
 import com.example.data_collection.utils.JwtUtils;
-import com.example.data_collection.utils.PrintIpAddress;
 import com.example.data_collection.utils.RedisUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -22,7 +23,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Service
@@ -127,56 +127,171 @@ public class StudentServiceImpl implements StudentService {
         return ResponseResult.SUCCESS("修改密码成功！");
     }
 
-//    ------------------------------------------
-    // 杨修伟部分
-
     /**
      * 查询所有学生信息
-     * @return
+     * @param size 数量
+     * @param page 页码
+     * @return 返回结果
      */
     @Override
-    public ResponseResult findAllStudent() {
-        return ResponseResult.SUCCESS("查找成功").setData(studentDao.findAll());
+    public ResponseResult findAllStudent(int size, int page) {
+        // 判断数值是否超出
+        if (size<=0){
+            size = 10;
+        }
+        if (page<=0){
+            page = 1;
+        }
+        page -= 1;
+        // 定义分页
+        Pageable pageable = PageRequest.of(page, size);
+        // 返回结果
+        return ResponseResult.SUCCESS("查找成功").setData(studentDao.findAll(pageable));
+    }
+
+    /**
+     * 查询所有班级
+     * @return 返回所有班级
+     */
+    @Override
+    public ResponseResult findAllClass() {
+        return ResponseResult.SUCCESS("获取班级成功").setData(studentDao.findAllClass());
+    }
+
+    /**
+     * 通过班级查询所有学生
+     * @param size 数量
+     * @param page 页码
+     * @return 返回结果
+     */
+    @Override
+    public ResponseResult findAllStudentsByClass(String className,int size, int page) {
+        // 判断数值是否超出
+        if (size<=0){
+            size = 10;
+        }
+        if (page<=0){
+            page = 1;
+        }
+        page -= 1;
+        // 查询所有学生
+        List<Object[]> students = studentDao.findAllStudentsByClass(className, size * page, size);
+        List<Map> results = new ArrayList<>();
+        Map<String, Object> result = new HashMap<>();
+        String[] name = {"s_id","s_number","s_college","s_department","s_name","s_class","s_choice"};
+        for (int i = 0; i < students.size(); i++) {
+            for (int j = 0; j < students.get(i).length; j++) {
+                result.put(name[j],students.get(i)[j]);
+            }
+            results.add(result);
+            result = new HashMap<>();
+        }
+        // 返回结果
+        return ResponseResult.SUCCESS("获取成功").setData(results);
+    }
+
+    /**
+     * 查询所有学生基本信息
+     * @return 返回结果
+     */
+    @Override
+    public ResponseResult findAllStudents() {
+        // 查询所有学生
+        List<Object[]> students = studentDao.findAllStudents();
+        List<Map> results = new ArrayList<>();
+        Map<String, Object> result = new HashMap<>();
+        String[] name = {"s_id","s_number","s_college","s_department","s_name","s_class","s_choice"};
+        for (int i = 0; i < students.size(); i++) {
+            for (int j = 0; j < students.get(i).length; j++) {
+                result.put(name[j],students.get(i)[j]);
+            }
+            results.add(result);
+            result = new HashMap<>();
+        }
+        return ResponseResult.SUCCESS("获取成功").setData(results);
     }
 
     /**
      * 通过部门查询学生信息
-     * @param sDepartment
-     * @return
+     * @param departmentName 部门名
+     * @return 返回结果
      */
     @Override
-    public ResponseResult findStudentByDepartment(String sDepartment) {
-        return ResponseResult.SUCCESS("查找成功").setData(studentDao.findBysDepartment(sDepartment));
+    public ResponseResult findStudentByDepartment(String departmentName) {
+        return ResponseResult.SUCCESS("查找成功").setData(studentDao.findAll(new Specification<Student>() {
+            @Override
+            public Predicate toPredicate(Root<Student> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                return criteriaBuilder.like(root.get("sDepartment") , "%"+departmentName+"%");
+            }
+        }));
     }
 
     /**
      * 添加学生信息
-     * @param student
-     * @return
+     * @param student 学生信息
+     * @return 返回结果
      */
     @Override
-    public ResponseResult insertStudent(Student student) {
-        return ResponseResult.SUCCESS("添加成功").setData(studentDao.save(student));
+    public ResponseResult addStudent(Student student) {
+        // 判断
+        if (student == null){
+            return ResponseResult.FAILED("学生信息为空");
+        }
+        // 保存信息
+        studentDao.save(student);
+        return ResponseResult.SUCCESS("添加成功");
+    }
+
+    /**
+     * 批量添加学生信息
+     * @param students 学生信息列表
+     * @return 返回结果
+     */
+    @Override
+    public ResponseResult addStudents(List<Student> students) {
+        // TODO:批量添加学生信息
+        return null;
     }
 
     /**
      * 修改学生信息
-     * @param student
-     * @return
+     * @param student 学生信息
+     * @return 返回结果
      */
     @Override
-    public ResponseResult updateStudent(Student student) {
-        return ResponseResult.SUCCESS("修改成功").setData(studentDao.save(student));
+    public ResponseResult editStudent(Student student) {
+        // 判断
+        if (student == null){
+            return ResponseResult.FAILED("学生信息为空");
+        }
+        // 保存数据
+        studentDao.save(student);
+        return ResponseResult.SUCCESS("修改成功");
     }
 
     /**
      * 通过id删除学生信息
-     * @param sId
-     * @return
+     * @param sId 学生ID
+     * @return 返回结果
      */
     @Override
     public ResponseResult deleteStudent(Long sId) {
-        System.out.println(sId);
-        return ResponseResult.SUCCESS("删除成功").setData(studentDao.deleteByid(sId));
+        try{
+            studentDao.deleteById(sId);
+        }catch (Exception e){
+            return ResponseResult.FAILED("学生不存在");
+        }
+        return ResponseResult.SUCCESS("删除成功");
+    }
+
+    /**
+     * 批量删除学生信息
+     * @param ids 学生ID列表
+     * @return 返回结果
+     */
+    @Override
+    public ResponseResult deleteStudents(List<Long> ids) {
+        // TODO:批量删除学生信息
+        return null;
     }
 }

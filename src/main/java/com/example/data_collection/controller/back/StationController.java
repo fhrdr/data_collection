@@ -4,15 +4,15 @@ import com.example.data_collection.entity.Station;
 import com.example.data_collection.result.ResponseResult;
 import com.example.data_collection.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.websocket.server.PathParam;
+import java.util.List;
 
 @RestController
-@RequestMapping("/back/station")
+@PreAuthorize("@permission.admin()")
+@RequestMapping("/back")
 public class StationController {
     //注入
     @Autowired
@@ -20,50 +20,91 @@ public class StationController {
 
     /**
      * 查找所有岗位信息
-     * @return
+     * @param size 数量
+     * @param page 页码
+     * @return 返回结果
      */
-    @RequestMapping("/findAll")
-    public ResponseResult findAllStationAndCompany(){
-        return stationService.findAllStationAndCompany();
+    @RequestMapping("/findAllStation/{size}/{page}")
+    public ResponseResult findAllStationAndCompany(@PathVariable("size") int size ,
+                                                   @PathVariable("page") int page){
+        return stationService.findAllStation(page , size);
     }
 
     /**
-     * 通过公司名查询岗位信息
-     * @param sName
-     * @return
+     * 通过岗位名字查询岗位
+     * @param size 数量
+     * @param page 页码
+     * @param stationName 岗位名
+     * @return 返回结果
      */
-    @RequestMapping("/findByCname")
-    public ResponseResult findStationByCname(String sName){
-        return stationService.findStationByCname(sName);
+    @GetMapping("/findStationByName/{size}/{page}")
+    public ResponseResult findStationByName(@PathVariable("size") int size,
+                                            @PathVariable("page") int page,
+                                            @PathParam("stationName") String stationName){
+        return stationService.findStationByName(page, size, stationName);
+    }
+
+    /**
+     * 通过公司名字查询岗位
+     * @param size 数量
+     * @param page 页码
+     * @param companyName 公司名
+     * @return 返回结果
+     */
+    @GetMapping("/findStationByCompany/{size}/{page}")
+    public ResponseResult findStationByCompany(@PathVariable("size") int size,
+                                            @PathVariable("page") int page,
+                                            @PathParam("companyName") String companyName){
+        return stationService.findStationByCompany(page, size, companyName);
     }
 
     /**
      * 添加岗位信息
-     * @param station
-     * @return
+     * @param station 岗位信息
+     * @return 返回结果
      */
-    @RequestMapping("/add")
+    @RequestMapping("/addStation")
     public ResponseResult addStation(Station station){
-        return stationService.insertStation(station);
+        return stationService.addStation(station);
     }
 
     /**
      * 修改岗位信息
-     * @param station
-     * @return
+     * @param station 岗位信息
+     * @return 返回结果
      */
-    @RequestMapping("/update")
-    public ResponseResult updateStation(Station station){
-        return stationService.updateStation(station);
+    @RequestMapping("/editStation")
+    public ResponseResult editStation(Station station){
+        return stationService.editStation(station);
     }
 
     /**
      * 通过id删除公司信息
-     * @param stId
-     * @return
+     * @param stId 岗位ID
+     * @return 返回结果
      */
-    @RequestMapping("/delete")
-    public ResponseResult deleteStudent(@PathParam("stId") Long stId){
-        return stationService.deleteStudent(stId);
+    @DeleteMapping("/deleteStation/{stId}")
+    public ResponseResult deleteStudent(@PathVariable("stId") Long stId){
+        return stationService.deleteStation(stId);
+    }
+
+    /**
+     * 批量添加岗位
+     * @param stations 岗位列表
+     * @return 返回结果
+     */
+    @PostMapping("/addStations")
+    public ResponseResult addStations(List<Station> stations){
+        return stationService.addStations(stations);
+    }
+
+    /**
+     * 批量删除岗位
+     * @param ids 岗位ID列表
+     * @return 返回结果
+     */
+    @DeleteMapping("/deleteStations")
+    public ResponseResult deleteStations(List<Long> ids){
+        return stationService.deleteStations(ids);
     }
 }

@@ -96,15 +96,6 @@ public class Station {
         this.stNeed = stNeed;
     }
 
-    public Long getcId() {
-        return cId;
-    }
-
-    public void setcId(Long cId) {
-        this.cId = cId;
-    }
-
-
   public String getStDescribe() {
     return stDescribe;
   }

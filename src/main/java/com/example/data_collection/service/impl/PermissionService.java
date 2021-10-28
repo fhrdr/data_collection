@@ -21,12 +21,11 @@ public class PermissionService {
     @Autowired
     private RedisUtil redisUtil;
 
-
     /**
      * 判断登录与否
      * @return 返回判断
      */
-    public boolean use() {
+    public boolean student() {
         // 拿到request
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         assert requestAttributes != null;
@@ -47,6 +46,34 @@ public class PermissionService {
         String redisToken = null;
         if (redisUtil.hasKey("token"+ip)){
             redisToken = (String) redisUtil.get("token"+ip);
+        }
+        if (redisToken==null){
+            return false;
+        }
+        return redisToken.equals(token);
+    }
+
+    public boolean admin() {
+        // 拿到request
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        assert requestAttributes != null;
+        HttpServletRequest request = requestAttributes.getRequest();
+        String token = request.getParameter("token");
+        // 没有key，则返回错误
+        if (token == null) {
+            return false;
+        }
+        try {
+            JwtUtils.parseJWT(token);
+        } catch (Exception e){
+            return false;
+        }
+        // 日志打印 IP 地址
+        String ip = PrintIpAddress.getIpAddress(request);
+        // 从 redis 获取 token
+        String redisToken = null;
+        if (redisUtil.hasKey("admin-token"+ip)){
+            redisToken = (String) redisUtil.get("admin-token"+ip);
         }
         if (redisToken==null){
             return false;

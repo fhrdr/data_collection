@@ -14,5 +14,6 @@ public class ErrorPageConfig implements ErrorPageRegistrar {
     @Override
     public void registerErrorPages(ErrorPageRegistry registry) {
         registry.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/error403"));
+        registry.addErrorPages(new ErrorPage(HttpStatus.METHOD_NOT_ALLOWED, "/error405"));
     }
 }

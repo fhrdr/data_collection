@@ -5,6 +5,7 @@ import com.example.data_collection.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ public class LoginController {
      * @param password 管理员密码
      * @return 返回登录结果
      */
-    @GetMapping("/admin")
+    @PostMapping("/admin")
     ResponseResult admin(String name , String password, HttpServletRequest request){
         return loginService.adminLogin(name , password, request);
     }
@@ -33,7 +34,7 @@ public class LoginController {
      * @param password 学生密码
      * @return 返回登录结果
      */
-    @GetMapping("/login")
+    @PostMapping("/login")
     ResponseResult login(String number , String password, HttpServletRequest request){
         return loginService.studentLogin(number , password, request);
     }
@@ -52,7 +53,16 @@ public class LoginController {
      * @return 返回结果
      */
     @GetMapping("/error403")
-    ResponseResult error(){
+    ResponseResult error403(){
         return ResponseResult.FAILED("登录超时，请重新登录");
+    }
+
+    /**
+     * 处理 403 错误
+     * @return 返回结果
+     */
+    @GetMapping("/error405")
+    ResponseResult error405(){
+        return ResponseResult.FAILED("权限不足");
     }
 }

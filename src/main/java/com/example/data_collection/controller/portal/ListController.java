@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
-@PreAuthorize("@permission.use()")
+@PreAuthorize("@permission.student()")
 @RequestMapping("/portal")
 public class ListController {
     // 注入

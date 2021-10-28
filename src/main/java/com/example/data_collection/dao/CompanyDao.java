@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
+import javax.xml.transform.sax.SAXTransformerFactory;
 import java.util.List;
 
 public interface CompanyDao extends JpaRepository<Company , Long>,
@@ -36,14 +37,7 @@ public interface CompanyDao extends JpaRepository<Company , Long>,
             "\tLIMIT ?2,?3")
     List<Object[]> searchCompanies(String companyName, int start, int end);
 
-
-
-    //杨修伟部分
-    //根据公司名查询
-    @Query( value = "select * from t_company where c_name = #{c_name}",nativeQuery = true)
-    List<Object[]> findByCName(String cName);
-
-    //通过id删除公司
-    @Query(value = "delete from t_company where c_id = ?1",nativeQuery = true)
-    int deleteByid(Long cId);
+    // 查询所有公司名
+    @Query(nativeQuery = true , value = "SELECT DISTINCT c_name,c_id FROM t_company")
+    List<Object[]> getAllCompanyName();
 }

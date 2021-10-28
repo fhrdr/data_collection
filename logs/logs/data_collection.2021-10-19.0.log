@@ -1,0 +1,15 @@
+[2021/10/19-00:03:23] [restartedMain] [INFO ] [com.example.data_collection.DataCollectionApplication] : Starting DataCollectionApplication using Java 1.8.0_161 on DESKTOP-Q163O02 with PID 2428 (E:\BeeTeam\所有项目\data_collection\target\classes started by fhrdr in E:\BeeTeam\所有项目\data_collection)
+[2021/10/19-00:03:23] [restartedMain] [INFO ] [com.example.data_collection.DataCollectionApplication] : No active profile set, falling back to default profiles: default
+[2021/10/19-00:03:27] [restartedMain] [INFO ] [com.example.data_collection.DataCollectionApplication] : Started DataCollectionApplication in 4.15 seconds (JVM running for 4.966)
+[2021/10/19-00:04:56] [restartedMain] [INFO ] [com.example.data_collection.DataCollectionApplication] : Starting DataCollectionApplication using Java 1.8.0_161 on DESKTOP-Q163O02 with PID 544 (E:\BeeTeam\所有项目\data_collection\target\classes started by fhrdr in E:\BeeTeam\所有项目\data_collection)
+[2021/10/19-00:04:56] [restartedMain] [INFO ] [com.example.data_collection.DataCollectionApplication] : No active profile set, falling back to default profiles: default
+[2021/10/19-00:04:59] [restartedMain] [INFO ] [com.example.data_collection.DataCollectionApplication] : Started DataCollectionApplication in 4.061 seconds (JVM running for 4.865)
+[2021/10/19-00:14:35] [restartedMain] [INFO ] [com.example.data_collection.DataCollectionApplication] : Starting DataCollectionApplication using Java 1.8.0_161 on DESKTOP-Q163O02 with PID 23664 (E:\BeeTeam\所有项目\data_collection\target\classes started by fhrdr in E:\BeeTeam\所有项目\data_collection)
+[2021/10/19-00:14:35] [restartedMain] [INFO ] [com.example.data_collection.DataCollectionApplication] : No active profile set, falling back to default profiles: default
+[2021/10/19-00:14:39] [restartedMain] [INFO ] [com.example.data_collection.DataCollectionApplication] : Started DataCollectionApplication in 4.315 seconds (JVM running for 5.16)
+[2021/10/19-00:15:58] [main] [INFO ] [com.example.data_collection.DataCollectionApplicationTests] : Starting DataCollectionApplicationTests using Java 1.8.0_161 on DESKTOP-Q163O02 with PID 1856 (started by fhrdr in E:\BeeTeam\所有项目\data_collection)
+[2021/10/19-00:15:58] [main] [INFO ] [com.example.data_collection.DataCollectionApplicationTests] : No active profile set, falling back to default profiles: default
+[2021/10/19-00:16:04] [main] [INFO ] [com.example.data_collection.DataCollectionApplicationTests] : Started DataCollectionApplicationTests in 5.953 seconds (JVM running for 6.904)
+[2021/10/19-16:06:09] [restartedMain] [INFO ] [com.example.data_collection.DataCollectionApplication] : Starting DataCollectionApplication using Java 1.8.0_161 on DESKTOP-Q163O02 with PID 20172 (E:\BeeTeam\所有项目\data_collection\target\classes started by fhrdr in E:\BeeTeam\所有项目\data_collection)
+[2021/10/19-16:06:09] [restartedMain] [INFO ] [com.example.data_collection.DataCollectionApplication] : No active profile set, falling back to default profiles: default
+[2021/10/19-16:06:17] [restartedMain] [INFO ] [com.example.data_collection.DataCollectionApplication] : Started DataCollectionApplication in 9.131 seconds (JVM running for 14.703)

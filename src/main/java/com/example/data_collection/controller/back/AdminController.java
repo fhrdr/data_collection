@@ -1,20 +1,19 @@
 package com.example.data_collection.controller.back;
 
 import com.example.data_collection.entity.Admin;
+import com.example.data_collection.interceptor.CheckTooFrequentCommit;
 import com.example.data_collection.result.ResponseResult;
 import com.example.data_collection.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
-import java.util.List;
 
 @RestController
-@RequestMapping("/back/admin")
+@PreAuthorize("@permission.admin()")
+@RequestMapping("/back")
 public class AdminController {
     //注入
     @Autowired
@@ -22,49 +21,49 @@ public class AdminController {
 
     /**
      * 查询所有管理员信息
-     * @return
+     * @return 返回结果
      */
-    @RequestMapping("/findAll")
+    @GetMapping("/findAllAdmin")
     public ResponseResult getAllAdmin(){
-        return adminService.findAll();
+        return adminService.findAllAdmin();
     }
 
     /**
      * 通过id查询管理员
      * @param id 用户ID
-     * @return
+     * @return 返回结果
      */
-    @RequestMapping("/findById/{id}")
+    @PostMapping("/findAdminById/{id}")
     public ResponseResult getAdminById(@PathVariable("id") Long id){
-        return adminService.findById(id);
+        return adminService.findAdminById(id);
     }
 
     /**
      * 添加管理员
-     * @param admin
-     * @return
+     * @param admin admin用户信息
+     * @return 返回结果
      */
-    @RequestMapping("/addAdmin")
+    @PostMapping("/addAdmin")
     public ResponseResult addAdmin(Admin admin){
-        return adminService.insertAdmin(admin);
+        return adminService.addAdmin(admin);
     }
 
     /**
      * 修改管理员信息
-     * @param admin
-     * @return
+     * @param admin admin用户信息
+     * @return 返回结果
      */
-    @RequestMapping("/updateAdmin")
-    public ResponseResult updateAdmin(Admin admin){
-        return adminService.updateAdmin(admin);
+    @PostMapping("/editAdmin")
+    public ResponseResult editAdmin(Admin admin){
+        return adminService.editAdmin(admin);
     }
 
     /**
      * 通过id删除管理员
-     * @param id
-     * @return
+     * @param id 管理员ID
+     * @return 返回结果
      */
-    @RequestMapping("/deleteAdmin")
+    @DeleteMapping("/deleteAdminById")
     public ResponseResult deleteAdminById(@PathParam("id") Long id){
         return adminService.deleteAdminById(id);
     }

@@ -140,22 +140,25 @@ public class StudentStationServiceImpl implements StudentStationService {
         return ResponseResult.SUCCESS("取消选择成功！");
     }
 
-//    -----------------------------------------
-    // 杨修伟部分
-
     /**
      * 添加学生-岗位信息
-     * @param studentStation
-     * @return
+     * @param studentStation 学生-岗位信息
+     * @return 返回结果
      */
     @Override
-    public ResponseResult insertStudentStation(StudentStation studentStation) {
-        return ResponseResult.SUCCESS("添加成功").setData(studentStationDao.save(studentStation));
+    public ResponseResult addStudentStation(StudentStation studentStation) {
+        // 判断
+        if (studentStation == null){
+            return ResponseResult.FAILED("学生岗位信息为空");
+        }
+        // 保存信息
+        studentStationDao.save(studentStation);
+        return ResponseResult.SUCCESS("添加学生-岗位成功");
     }
 
     /**
      * 关联查询学生-岗位-公司信息
-     * @return
+     * @return 返回结果
      */
     @Override
     public ResponseResult findStudentInfo() {
@@ -164,8 +167,8 @@ public class StudentStationServiceImpl implements StudentStationService {
 
     /**
      * 通过班级进行关联查询学生-岗位信息
-     * @param sClass
-     * @return
+     * @param sClass 班级名称
+     * @return 返回结果
      */
     @Override
     public ResponseResult findBySClass(String sClass) {

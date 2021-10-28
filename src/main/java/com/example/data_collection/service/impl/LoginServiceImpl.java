@@ -114,7 +114,7 @@ public class LoginServiceImpl implements LoginService {
         // 日志打印 IP 地址
         String ip = PrintIpAddress.getIpAddress(request, "登录后台系统...");
         // 存放token
-        redisUtil.set("token"+ip, token);
+        redisUtil.set("admin-token"+ip, token);
         // 返回成功
         return ResponseResult.SUCCESS("登录成功！").setData(token);
     }
